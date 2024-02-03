@@ -1,18 +1,3 @@
-
-
-// setInterval(() => {
-// 	document.getElementById('topContainer').style.backgroundColor = `rgb(${Math.floor(Math.random() * 255)},${Math.random() * 255}, ${Math.random() * 255})`
-// }, 1000)
-
-// setInterval(() => {
-// 	document.getElementById('bottomContainer').style.backgroundColor = `rgb(${Math.floor(Math.random() * 255)},${Math.random() * 255}, ${Math.random() * 255})`
-// }, 900)
-
-// setInterval(() => {
-
-// 	document.getElementById('main').style.background =  `linear-gradient(${colors[Math.floor(Math.random() * colors.length)]}, ${colors[Math.floor(Math.random() * colors.length)]})`
-// }, 1000)
-
 let isPlaying = false;
 let clock = 60;
 let itemCount = 0
@@ -31,15 +16,14 @@ document.getElementById('clock').innerHTML = clock.toString()
 function startButtonClickHandler() {
 	isPlaying = true;
 	const timer = setInterval(() => {
-		console.log('clock', clock)
+		if (!isPlaying) {
+			clearInterval(timer);
+		}
 		if (clock === 0) {
 			clearInterval(timer);
 			isPlaying = false
-			itemCount = 0;
 			clock = 60;
 			document.getElementById('clock').innerHTML = clock.toString()
-			gridContainer.child
-			mountBlackScreen();
 			alert('Timer finished!');
 			return;
 		}
@@ -48,24 +32,20 @@ function startButtonClickHandler() {
 	}, 1000);
 }
 
-// Get reference to the grid container element
 const gridContainer = document.getElementById('main');
 
-// Define the number of rows and columns for the grid
 const rows = Math.floor((window.innerHeight - 20)/50);
 const columns = Math.floor((window.innerWidth + 50)/50);
-
-// function clickHandler(e) {
-// 	document.getElementById(e.target.id).style.backgroundColor = '#ffffff'
-// }
 
 let boxesWithColor = []
 
 function hoverHandler(e) {
 	if (isPlaying) {
-		if (boxesWithColor.length >= itemCount) {
+		if (boxesWithColor.length == itemCount) {
 			alert('You win!')
 			isPlaying = false
+			clock = 60;
+			document.getElementById('clock').innerHTML = clock.toString()
 			return
 		}
 		if (isMouseDown && !boxesWithColor.includes(e.target.id)) {
@@ -92,7 +72,6 @@ function mountBlackScreen() {
 			const box = document.createElement('div')
 			box.style.transition = 'height 1s'
 			box.setAttribute('id', `row-${i}-box${j}`)
-			// box.addEventListener('click', clickHandler)
 			box.addEventListener('mouseover', hoverHandler)
 			box.style.backgroundColor = '#000000'
 			box.style.height = '50px'
