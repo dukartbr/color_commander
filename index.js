@@ -14,22 +14,25 @@ document.getElementById('startButton').addEventListener('click', startButtonClic
 document.getElementById('clock').innerHTML = clock.toString()
 
 function startButtonClickHandler() {
-	isPlaying = true;
-	const timer = setInterval(() => {
-		if (!isPlaying) {
-			clearInterval(timer);
-		}
-		if (clock === 0) {
-			clearInterval(timer);
-			isPlaying = false
-			clock = 60;
+	if (!isPlaying) {
+		document.getElementById('startButton').innerHTML = 'Get Draggin!'
+		isPlaying = true;
+		const timer = setInterval(() => {
+			if (!isPlaying) {
+				clearInterval(timer);
+			}
+			if (clock === 0) {
+				clearInterval(timer);
+				isPlaying = false
+				clock = 60;
+				document.getElementById('clock').innerHTML = clock.toString()
+				alert('Timer finished!');
+				return;
+			}
+			clock--;
 			document.getElementById('clock').innerHTML = clock.toString()
-			alert('Timer finished!');
-			return;
-		}
-		clock--;
-		document.getElementById('clock').innerHTML = clock.toString()
-	}, 1000);
+		}, 1000);
+	}
 }
 
 const gridContainer = document.getElementById('main');
