@@ -1,68 +1,62 @@
 let isPlaying = false;
-let clock = 60;
+let clock = 120;
 let itemCount = 0
-
 let isMouseDown = false;
-document.addEventListener('mousedown', () => {
-  isMouseDown = true;
-});
-document.addEventListener('mouseup', () => {
-  isMouseDown = false;
-});
-
-document.getElementById('startButton').addEventListener('click', startButtonClickHandler)
-document.getElementById('clock').innerHTML = clock.toString()
-
-function startButtonClickHandler() {
-	if (!isPlaying) {
-		document.getElementById('startButton').innerHTML = 'Get Draggin!'
-		isPlaying = true;
-		const timer = setInterval(() => {
-			if (!isPlaying) {
-				clearInterval(timer);
-			}
-			if (clock === 0) {
-				clearInterval(timer);
-				isPlaying = false
-				clock = 60;
-				document.getElementById('clock').innerHTML = clock.toString()
-				alert('Timer finished!');
-				return;
-			}
-			clock--;
-			document.getElementById('clock').innerHTML = clock.toString()
-		}, 1000);
-	}
-}
-
 const gridContainer = document.getElementById('main');
-
-const rows = Math.floor((window.innerHeight - 20)/50);
-const columns = Math.floor((window.innerWidth + 50)/50);
-
+const rows = Math.floor((window.innerHeight + 50)/50);
+const columns = Math.floor((window.innerWidth)/50);
 let boxesWithColor = []
 
+// document.addEventListener('mousedown', () => {
+//   isMouseDown = true;
+// });
+// document.addEventListener('mouseup', () => {
+//   isMouseDown = false;
+// });
+
+// document.getElementById('startButton').addEventListener('click', startButtonClickHandler)
+// document.getElementById('clock').innerHTML = clock.toString()
+
+// function startButtonClickHandler() {
+// 	if (!isPlaying) {
+// 		document.getElementById('startButton').innerHTML = 'Get Draggin!'
+// 		isPlaying = true;
+// 		const timer = setInterval(() => {
+// 			if (!isPlaying) {
+// 				clearInterval(timer);
+// 			}
+// 			if (clock === 0) {
+// 				clearInterval(timer);
+// 				isPlaying = false
+// 				clock = 60;
+// 				document.getElementById('clock').innerHTML = clock.toString()
+// 				alert('Timer finished!');
+// 				return;
+// 			}
+// 			clock--;
+// 			document.getElementById('clock').innerHTML = clock.toString()
+// 		}, 1000);
+// 	}
+// }
+
+
 function hoverHandler(e) {
-	if (isPlaying) {
-		if (boxesWithColor.length == itemCount) {
-			alert('You win!')
-			isPlaying = false
-			clock = 60;
-			document.getElementById('clock').innerHTML = clock.toString()
-			return
-		}
-		if (isMouseDown && !boxesWithColor.includes(e.target.id)) {
+	// if (isPlaying) {
+	// 	if (boxesWithColor.length == itemCount) {
+	// 		alert('You win!')
+	// 		isPlaying = false
+	// 		clock = 60;
+	// 		document.getElementById('clock').innerHTML = clock.toString()
+	// 		return
+	// 	}
+		if (!boxesWithColor.includes(e.target.id)) {
 			boxesWithColor.push(e.target.id)
 			document.getElementById(e.target.id).style.backgroundColor = `rgb(${Math.floor(Math.random() * 255)}, ${Math.floor(Math.random() * 255)}, ${Math.floor(Math.random() * 255)})`
-		} else if (isMouseDown && boxesWithColor.includes(e.target.id)) {
-			boxesWithColor = boxesWithColor.filter((id) => id !== e.target.id)
-			document.getElementById(e.target.id).style.backgroundColor = '#000000'
 		}
-	}
+	// }
 }
 
 function mountBlackScreen() {
-
 	for (let i = 0; i < rows; i++) {
 		const row = document.createElement('div')
 		row.setAttribute('id', `row-${i}`)
